@@ -2,53 +2,83 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.iancollington.blog</groupId>
-    <artifactId>angular-hello-world</artifactId>
-
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.2.RELEASE</version>
+        <groupId>com.iancollington.blog</groupId>
+        <artifactId>angular-hello-world</artifactId>
+        <version>1.0.0</version>
     </parent>
+
+    <groupId>com.iancollington.blog</groupId>
+    <artifactId>angular-hello-world-ui</artifactId>
 
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <name>Angular Hello World</name>
+    <name>Angular Hello World UI</name>
 
-    <scm>
-        <url>https://github.com/iancollington/angular-hello-world</url>
-    </scm>
+    <dependencies>
 
-    <modules>
-        <module>angular-hello-world-service</module>
-        <module>angular-hello-world-ui</module>
-    </modules>
+    </dependencies>
 
     <build>
-      <pluginManagement>
+        <finalName>angular-hello-world-ui</finalName>
         <plugins>
-          <plugin>
-            <groupId>io.fabric8</groupId>
-            <artifactId>docker-maven-plugin</artifactId>
-            <version>0.15.9</version>
-            <executions>
-              <execution>
-                <id>docker:build</id>
-                <phase>install</phase>
-                <goals>
-                  <goal>build</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>docker:deploy</id>
-                <phase>deploy</phase>
-                <goals>
-                  <goal>push</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>npm-install</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <workingDirectory>${basedir}</workingDirectory>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>grunt-generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>./node_modules/.bin/grunt</executable>
+                            <workingDirectory>${basedir}</workingDirectory>
+                            <arguments>
+                                <argument>default</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+              <groupId>io.fabric8</groupId>
+              <artifactId>docker-maven-plugin</artifactId>
+              <configuration>
+                <images>
+                  <image>
+                    <name>iancollington/angular-hello-world-ui</name>
+                    <build>
+                      <from>nginx</from>
+                      <assembly>
+                        <descriptor>assembly.xml</descriptor>
+                        <basedir>/</basedir>
+                      </assembly>
+                      <ports>
+                        <port>80</port>
+                      </ports>
+                      <cmd>/bin/bash -c "nginx -g 'daemon off;'"</cmd>
+                    </build>
+                  </image>
+                </images>
+              </configuration>
+            </plugin>
         </plugins>
-      </pluginManagement>
     </build>
 </project>

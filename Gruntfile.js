@@ -30,6 +30,7 @@ module.exports = function(grunt){
 			built: {
 				files: [
 					{ "src": "app/index.html", "dest": "<%= build.target.built %>/index.html" },
+					{ "src": "app/hello.gif", "dest": "<%= build.target.built %>/hello.gif" },
 					{ "src": "app/vendor/bootstrap.min.css", "dest": "<%= build.target.built %>/css/bootstrap.min.css" },
 					{ "src": "app/vendor/bootstrap-theme.min.css", "dest": "<%= build.target.built %>/css/bootstrap-theme.min.css" }
 				]
