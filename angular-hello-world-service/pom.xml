@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.iancollington.blog</groupId>
+        <artifactId>angular-hello-world</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <groupId>com.iancollington.blog</groupId>
+    <artifactId>angular-hello-world-service</artifactId>
+
+    <packaging>war</packaging>
+    <version>1.0.0</version>
+    <name>Angular Hello World Service</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>angular-hello-world-service</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+              <groupId>io.fabric8</groupId>
+              <artifactId>docker-maven-plugin</artifactId>
+              <configuration>
+                <images>
+                  <image>
+                    <name>iancollington/angular-hello-world-service</name>
+                    <build>
+                      <from>tomcat</from>
+                      <assembly>
+                        <descriptor>assembly.xml</descriptor>
+                        <basedir>/</basedir>
+                      </assembly>
+                      <ports>
+                        <port>8080</port>
+                      </ports>
+                      <runCmds>
+                        <run>rm -rf /usr/local/tomcat/webapps/ROOT</run>
+                      </runCmds>
+                    </build>
+                  </image>
+                </images>
+              </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
