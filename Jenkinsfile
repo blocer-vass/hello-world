@@ -3,6 +3,7 @@ package ecr
 
 pipeline {
     agent any
+    import ecr
     triggers { pollSCM('* * * * *') }
     stages {
         stage('download git repo'){
