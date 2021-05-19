@@ -1,4 +1,5 @@
-import ecr
+//@Library('first-shared-lib') _ ecr
+@SharedLibrary('ecr') _
 
 pipeline {
     agent any
