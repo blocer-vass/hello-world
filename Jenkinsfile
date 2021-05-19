@@ -1,4 +1,4 @@
-@Library('ecr') _ 
+package ecr 
 //@SharedLibrary('ecr') _
 
 pipeline {
