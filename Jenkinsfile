@@ -1,3 +1,5 @@
+import ecr
+
 pipeline {
     agent any
     triggers { pollSCM('* * * * *') }
@@ -20,7 +22,7 @@ pipeline {
                 //}
             }
         }
-        stage ('contruccion imagen'){
+        stage ('build image'){
             steps {
                 script {
                     docker.build("hello-example:${env.BUILD_ID}")
@@ -28,5 +30,17 @@ pipeline {
             }
             
         }
+        stage ('Create ecr repo'){
+	    when {
+	        expression {
+		    return checkRepoEcr('gremio')
+		}
+	    }
+            steps {
+		createRepoEcr('gremio')
+            }
+
+        }
+
     }
 }
