@@ -1,5 +1,5 @@
-//@Library('first-shared-lib') _ ecr
-@SharedLibrary('ecr') _
+@Library('ecr') _ 
+//@SharedLibrary('ecr') _
 
 pipeline {
     agent any
