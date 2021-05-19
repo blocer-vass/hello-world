@@ -34,7 +34,9 @@ pipeline {
         stage ('Create ecr repo'){
 	    when {
 	        expression {
-		    return checkRepoEcr('gremio')
+		    script {
+		    	return checkRepoEcr('gremio')
+		    }
 		}
 	    }
             steps {
