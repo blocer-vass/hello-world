@@ -26,7 +26,7 @@ pipeline {
                 script {
 		    dockerfile=pwd()
 		    dir ("hello-world") {
-                        docker.build("hello-example:${env.BUILD_ID}"," -f ${dockerfile} ./Dockerfil ./Dockerfile")
+                        docker.build("hello-example:${env.BUILD_ID}"," -f ${dockerfile} ./Dockerfile")
 		    }
                 }
             }
