@@ -1,3 +1,3 @@
 FROM nginx:alpine
-COPY target/dist/ /usr/share/nginx/html
+COPY hello-world/target/dist/ /usr/share/nginx/html
 EXPOSE 80
