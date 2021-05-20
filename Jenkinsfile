@@ -3,7 +3,7 @@
 
 pipeline {
     agent any
-    define {
+    options {
 	def ecr = load "ecr.groovy"
     }
     triggers { pollSCM('* * * * *') }
