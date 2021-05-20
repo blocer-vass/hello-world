@@ -13,3 +13,4 @@ def createRepoEcr (String NAME) {
   sh "aws ecr create-repository --repository-name ${NAME}"
 }
 
+return this

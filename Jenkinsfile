@@ -1,5 +1,5 @@
 //package ecr 
-ecr = load ("ecr.groovy")
+def ecr = load "ecr.groovy"
 
 pipeline {
     agent any
