@@ -40,7 +40,9 @@ pipeline {
 		}
 	    }
             steps {
-		ecr.createRepoEcr('gremio')
+		script {
+		    ecr.createRepoEcr('gremio')
+		}
             }
 
         }
