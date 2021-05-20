@@ -45,6 +45,20 @@ pipeline {
             }
 
         }
+	stage ('push to ecr') {
+	    steps {
+                 script {
+                      registry="https://869279755764.dkr.ecr.eu-west-1.amazonaws.com/gremio
+                      echo registry
+                      docker.withRegistry( "${registry}", "ecr:eu-west-1:aws" ) {
+                          docker.image("hello-example:${env.BUILD_ID}").push("${env.BUILD_ID}")
+                      }
+                 }
+            }
+	}
+
+	    }
+	}
 
     }
 }
