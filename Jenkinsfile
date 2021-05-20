@@ -1,5 +1,3 @@
-//package ecr 
-//def ecr = libraryResource "ecr.groovy"
 
 pipeline {
     agent any
@@ -35,14 +33,13 @@ pipeline {
 	    when {
 	        expression {
 		    script {
-			def ecr = load "vars/ecr.groovy"
+			ecr = load "library/ecr.groovy"
 		    	return ecr.checkRepoEcr('gremio')
 		    }
 		}
 	    }
             steps {
 		script {
-		    def ecr = load "vars/ecr.groovy"
 		    ecr.createRepoEcr('gremio')
 		}
             }
