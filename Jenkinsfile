@@ -1,5 +1,5 @@
 package ecr 
-//@SharedLibrary('ecr') _
+import ecr.checkRepoEcr
 
 pipeline {
     agent any
