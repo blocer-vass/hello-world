@@ -1,5 +1,5 @@
-package ecr 
-import ecr.checkRepoEcr
+//package ecr 
+def ecr = load "scripts@ecr.Groovy"
 
 pipeline {
     agent any
@@ -36,12 +36,12 @@ pipeline {
 	    when {
 	        expression {
 		    script {
-		    	return checkRepoEcr('gremio')
+		    	return ecr.checkRepoEcr('gremio')
 		    }
 		}
 	    }
             steps {
-		createRepoEcr('gremio')
+		ecr.createRepoEcr('gremio')
             }
 
         }
