@@ -35,14 +35,14 @@ pipeline {
 	    when {
 	        expression {
 		    script {
-			def ecr = libraryResource "ecr.groovy"
+			def ecr = load "ecr.groovy"
 		    	return ecr.checkRepoEcr('gremio')
 		    }
 		}
 	    }
             steps {
 		script {
-		    def ecr = libraryResource "ecr.groovy"
+		    def ecr = load "ecr.groovy"
 		    ecr.createRepoEcr('gremio')
 		}
             }
