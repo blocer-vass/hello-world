@@ -3,7 +3,6 @@ def ecr = load "scripts@ecr.Groovy"
 
 pipeline {
     agent any
-    import ecr
     triggers { pollSCM('* * * * *') }
     stages {
         stage('download git repo'){
