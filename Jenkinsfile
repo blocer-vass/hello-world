@@ -1,11 +1,8 @@
 //package ecr 
-//def ecr = load "ecr.groovy"
+def ecr = libraryResource "ecr.groovy"
 
 pipeline {
     agent any
-    options {
-	def ecr = load "ecr.groovy"
-    }
     triggers { pollSCM('* * * * *') }
     stages {
         stage('download git repo'){
