@@ -24,8 +24,9 @@ pipeline {
         stage ('build image'){
             steps {
                 script {
+		    dockerfile=pwd()+/Dockerfile
 		    dir ("hello-world") {
-                        docker.build("hello-example:${env.BUILD_ID}")
+                        docker.build("hello-example:${env.BUILD_ID}" -f ${dockerfile})
 		    }
                 }
             }
