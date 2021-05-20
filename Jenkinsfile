@@ -58,6 +58,22 @@ pipeline {
                  }
             }
 	}
+	
+	stage ('deploy'){
+	   steps {
+		script {
+		    helm upgrade hello-world gremio-example  --namespace=gremio-jenkins --install --set image.repository="869279755764.dkr.ecr.eu-west-1.amazonaws.com/${NAME}:${env.BUILD_ID}" 
+		}
+	   }
+	}
 
     }
+
+    post {
+       always {
+           cleanWs()
+       }
+   }
 }
+
+
