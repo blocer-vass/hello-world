@@ -1,6 +1,9 @@
 
 pipeline {
     agent any
+    parameters {
+	string(name: 'NAME', defaultValue: 'hello-example', description: 'name image')
+    }
     triggers { pollSCM('* * * * *') }
     stages {
         stage('download git repo'){
@@ -24,7 +27,7 @@ pipeline {
         stage ('build image'){
             steps {
                 script {
-                    docker.build("hello-example:${env.BUILD_ID}")
+                    docker.build("${params.NAME}:${env.BUILD_ID}")
                 }
             }
             
@@ -34,13 +37,13 @@ pipeline {
 	        expression {
 		    script {
 			ecr = load "library/ecr.groovy"
-		    	return ecr.checkRepoEcr('gremio')
+		    	return ecr.checkRepoEcr(NAME)
 		    }
 		}
 	    }
             steps {
 		script {
-		    ecr.createRepoEcr('gremio')
+		    ecr.createRepoEcr(NAME)
 		}
             }
 
@@ -48,10 +51,9 @@ pipeline {
 	stage ('push to ecr') {
 	    steps {
                  script {
-                      registry="https://869279755764.dkr.ecr.eu-west-1.amazonaws.com/gremio"
-                      echo registry
-                      docker.withRegistry( "${registry}", "ecr:eu-west-1:aws" ) {
-                          docker.image("hello-example:${env.BUILD_ID}").push("${env.BUILD_ID}")
+                      registry="https://869279755764.dkr.ecr.eu-west-1.amazonaws.com/"+NAME
+                      docker.withRegistry( "${registry}", 'ecr:eu-west-1:aws' ) {
+                          docker.image("${NAME}:${env.BUILD_ID}").push("${env.BUILD_ID}")
                       }
                  }
             }
