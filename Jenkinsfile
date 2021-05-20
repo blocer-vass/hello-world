@@ -5,6 +5,12 @@ pipeline {
 	string(name: 'NAME', defaultValue: 'hello-example', description: 'name image')
     }
     triggers { pollSCM('* * * * *') }
+    options {
+        timestamps ()
+        withAWS(credentials: 'aws', region: 'eu-west-1')
+        withKubeConfig([credentialsId: 'kubeconfig' ,  serverUrl: 'https://52b5d98096ce6cc69c293741e709fec4.sk1.eu-west-1.eks.amazonaws.com'])
+    }
+
     stages {
         stage('download git repo'){
             steps {
